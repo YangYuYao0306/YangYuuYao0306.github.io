@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --white: #fff; --off-white: #FAFAF8; --warm-gray: #F3F2EE; --rule: #D8D5CE;
+    --text-primary: #1A1917; --text-secondary: #5C5A55; --text-muted: #9C9A95;
+    --accent: #3D6B9E; --accent-light: #EBF0F7; --accent-dark: #2A4E77;
+    --serif: 'EB Garamond', 'Noto Serif SC', Georgia, serif;
+    --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--serif); background: var(--white); color: var(--text-primary); font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); padding: 0 clamp(1.5rem,5vw,5rem); display:flex; align-items:center; justify-content:space-between; height:56px; }
+  .nav-brand { font-family: var(--mono); font-size: 12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); text-decoration:none; }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-secondary); text-decoration:none; transition:color .2s; }
+  .nav-links a:hover { color:var(--accent); }
+  section { padding: clamp(4rem,8vw,7rem) clamp(1.5rem,5vw,5rem); }
+  .section-alt { background:var(--off-white); }
+  .container { max-width:900px; margin:0 auto; }
+  .section-label { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:.75rem; display:flex; align-items:center; gap:.75rem; }
+  .section-label::before { content:''; display:inline-block; width:24px; height:1px; background:var(--accent); flex-shrink:0; }
+
+  #hero { padding-top: calc(56px + clamp(3rem,8vw,6rem)); padding-bottom: clamp(4rem,9vw,7rem); position:relative; overflow:hidden; }
+  #hero::after { display:none; }
+  .hero-layout { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr); gap:clamp(2rem,5vw,4.5rem); align-items:center; }
+  .hero-sub { font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:1.25rem; display:flex; align-items:center; gap:.75rem; }
+  .hero-sub::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1.hero-name { font-size:clamp(3rem,7vw,5.5rem); font-weight:400; line-height:1.08; letter-spacing:-.015em; margin-bottom:.12em; }
+  h1.hero-name em { font-style:italic; color:var(--accent); }
+  .hero-title { font-size:clamp(.95rem,2vw,1.1rem); color:var(--text-secondary); margin-bottom:.5rem; font-weight:400; }
+  .hero-affil { font-size:.95rem; color:var(--text-muted); margin-bottom:1.8rem; }
+  .hero-affil a { color:var(--accent); text-decoration:underline; text-underline-offset:3px; }
+  .hero-desc { font-size:clamp(1rem,2vw,1.18rem); line-height:1.8; color:var(--text-primary); max-width:680px; margin-bottom:1.4rem; }
+  .hero-about { color:var(--text-secondary); font-size:1.02rem; max-width:700px; margin-bottom:1.5rem; }
+  .interests-inline { display:flex; gap:.5rem; flex-wrap:wrap; margin:1.2rem 0 2rem; }
+  .interest-chip { font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; padding:.28rem .62rem; border:1px solid var(--rule); color:var(--text-muted); background:var(--white); }
+  .hero-links { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; gap:.4rem; padding:.55rem 1.25rem; font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; border:1px solid currentColor; transition:all .2s; cursor:pointer; }
+  .btn-primary { color:var(--white); background:var(--accent); border-color:var(--accent); }
+  .btn-primary:hover { background:var(--accent-dark); border-color:var(--accent-dark); }
+  .btn-outline { color:var(--accent); background:transparent; }
+  .btn-outline:hover { background:var(--accent-light); }
+  .hero-photo-wrap { position:relative; }
+  .hero-photo { width:100%; aspect-ratio:4/5; object-fit:cover; display:block; border:1px solid var(--rule); background:var(--warm-gray); box-shadow: 18px 18px 0 var(--accent-light); }
+  .hero-photo-caption { font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-muted); margin-top:1.15rem; }
+  .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:2.6rem; max-width:700px; }
+  .stat-cell { background:var(--white); text-align:center; padding:1.25rem .8rem; }
+  .stat-num { font-size:2rem; font-weight:400; color:var(--accent); line-height:1; display:block; margin-bottom:.25rem; }
+  .stat-label { font-family:var(--mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--text-muted); }
+
+  .research-intro { font-size:1.1rem; color:var(--text-secondary); max-width:640px; margin-bottom:3rem; line-height:1.8; }
+  .research-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2px; background:var(--rule); border:1px solid var(--rule); }
+  .research-card { background:var(--white); padding:2rem; transition:background .2s; }
+  .research-card:hover { background:var(--accent-light); }
+  .research-card-num { font-family:var(--mono); font-size:10px; letter-spacing:.15em; color:var(--text-muted); margin-bottom:1.25rem; display:block; }
+  .research-card h3 { font-size:1.05rem; font-weight:500; line-height:1.4; margin-bottom:.75rem; }
+  .research-card p { font-size:.92rem; color:var(--text-secondary); line-height:1.65; }
+  .pub-year-group { margin-bottom:3rem; }
+  .pub-year { font-family:var(--mono); font-size:11px; letter-spacing:.2em; color:var(--accent); margin-bottom:1.25rem; display:flex; align-items:center; gap:1rem; }
+  .pub-year::after { content:''; flex:1; height:1px; background:var(--rule); }
+  .pub-item { padding:1.5rem 0; border-bottom:1px solid var(--warm-gray); }
+  .pub-title { font-size:1.02rem; font-weight:500; margin-bottom:.35rem; line-height:1.45; }
+  .pub-title a { color:inherit; text-decoration:underline; text-underline-offset:3px; }
+  .pub-authors { font-size:.9rem; color:var(--text-secondary); margin-bottom:.25rem; }
+  .pub-authors strong { color:var(--text-primary); }
+  .pub-venue { font-size:.88rem; color:var(--text-muted); font-style:italic; }
+  .pub-tags { display:flex; gap:.5rem; margin-top:.6rem; flex-wrap:wrap; }
+  .tag { font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; padding:.2rem .55rem; border:1px solid var(--rule); color:var(--text-muted); }
+  .tag-highlight { background:var(--accent); color:var(--white); border-color:var(--accent); }
+  .teaching-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+  .course-item { padding:1.75rem; border:1px solid var(--rule); background:var(--white); }
+  .course-code { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:.6rem; }
+  .course-title { font-size:1.05rem; font-weight:500; margin-bottom:.5rem; }
+  .course-meta { font-size:.88rem; color:var(--text-muted); }
+  #contact { background:var(--white); }
+  #contact .section-label { color:var(--text-muted); }
+  .contact-inner { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+  .contact-head { font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:400; color:var(--text-primary); line-height:1.2; letter-spacing:-.015em; margin-bottom:1.25rem; }
+  .contact-head em { color:var(--accent); font-style:italic; }
+  .contact-sub { font-size:1rem; color:var(--text-secondary); line-height:1.75; }
+  .contact-links { list-style:none; }
+  .contact-links li { border-bottom:1px solid var(--warm-gray); }
+  .contact-links a { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 0; text-decoration:none; color:var(--text-primary); font-size:.95rem; }
+  .contact-links a:hover { color:var(--accent); }
+  .contact-links .link-label { font-family:var(--mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--text-muted); margin-right:1rem; display:inline-block; min-width:80px; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  .anim-1 { animation:fadeUp .7s .1s both ease-out; } .anim-2 { animation:fadeUp .7s .25s both ease-out; } .anim-3 { animation:fadeUp .7s .4s both ease-out; } .anim-4 { animation:fadeUp .7s .55s both ease-out; }
+  @media(max-width:860px){ .hero-layout{grid-template-columns:1fr;} .hero-photo-wrap{max-width:320px;} .contact-inner,.teaching-grid{grid-template-columns:1fr;} .nav-links{display:none;} .stat-row{grid-template-columns:repeat(3,1fr);} }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="#hero" data-field="brand">张明远 / Zhang Mingyuan</a>
+  <ul class="nav-links">
+    <li><a href="#hero">关于</a></li>
+    <li><a href="#research">研究</a></li>
+    <li><a href="#publications">发表</a></li>
+    <li><a href="#teaching">教学</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+</nav>
+<section id="hero">
+  <div class="hero-layout">
+    <div>
+      <div class="hero-sub anim-1" data-field="heroRole"></div>
+      <h1 class="hero-name anim-2" data-field="name"></h1>
+      <p class="hero-title anim-2" data-field="title"></p>
+      <p class="hero-affil anim-2" data-field="affiliation"></p>
+      <p class="hero-desc anim-3" data-field="heroDesc"></p>
+      <p class="hero-about anim-3" data-field="about"></p>
+      <div class="interests-inline anim-3" id="interestChips"></div>
+      <div class="hero-links anim-4" id="heroLinks"></div>
+      <div class="stat-row" id="stats"></div>
+    </div>
+    <div class="hero-photo-wrap anim-3">
+      <img class="hero-photo" id="heroPhoto" alt="Profile photo">
+      <div class="hero-photo-caption" data-field="photoCaption"></div>
+    </div>
+  </div>
+</section>
+<section id="research" class="section-alt">
+  <div class="container">
+    <div class="section-label">Research</div>
+    <p class="research-intro" data-field="researchIntro"></p>
+    <div class="research-grid" id="researchGrid"></div>
+  </div>
+</section>
+<section id="publications">
+  <div class="container">
+    <div class="section-label">Selected Publications</div>
+    <div id="publicationList"></div>
+  </div>
+</section>
+<section id="teaching" class="section-alt">
+  <div class="container">
+    <div class="section-label">Teaching</div>
+    <p style="color:var(--text-secondary);margin-bottom:2.5rem;font-size:1.05rem;max-width:600px;" data-field="teachingIntro"></p>
+    <div class="teaching-grid" id="teachingGrid"></div>
+  </div>
+</section>
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <div class="contact-inner">
+      <div><h2 class="contact-head" data-field="contactHead"></h2><p class="contact-sub" data-field="contactSub"></p></div>
+      <div><ul class="contact-links" id="contactLinks"></ul></div>
+    </div>
+  </div>
+</section>
+<script>
+const DEFAULT_SITE_DATA = {
+  brand:'张明远 / Zhang Mingyuan', heroRole:'副教授 — 计算机科学系', name:'张 <em>明</em>远', title:'Associate Professor · Computational Linguistics & NLP', affiliation:'<a href="#">清华大学</a> — 计算机科学与技术系 · 北京，100084',
+  heroDesc:'研究方向涵盖自然语言处理、大型语言模型与跨语言迁移学习。致力于构建能够理解并生成自然、准确语言的计算系统，尤其关注低资源语言与多语言场景下的语义理解问题。',
+  about:'张明远，博士毕业于麻省理工学院计算机科学与人工智能实验室（CSAIL），师从 Prof. Regina Barzilay。现任清华大学计算机科学与技术系副教授、博士生导师，并兼任人工智能研究院研究员。研究聚焦于大型语言模型的可解释性与多语言泛化能力。',
+  photo:'https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=900&q=80', photoCaption:'Profile / Research portrait',
+  interests:['自然语言处理','大型语言模型','多语言学习','低资源语言建模','可解释性','机器翻译'],
+  links:[{label:'下载 CV →',url:'#',primary:true},{label:'查看发表',url:'#publications'},{label:'发送邮件',url:'#contact'}],
+  stats:[{num:'40+',label:'发表论文'},{num:'6,200',label:'引用次数'},{num:'H = 28',label:'H 指数'}],
+  researchIntro:'当前研究项目探索语言模型的内在机理，致力于使 AI 系统更透明、更可靠，同时拓展其在多语言低资源条件下的应用边界。',
+  research:[{title:'大语言模型的可解释性研究',desc:'通过探针实验与因果干预方法，揭示 Transformer 模型内部的语言知识表示与推理过程。'},{title:'跨语言迁移与零样本泛化',desc:'研究如何利用高资源语言的语义知识，在数据匮乏的语言场景中实现有效迁移。'},{title:'面向医疗领域的 NLP 系统',desc:'开发面向临床文本的信息抽取与诊断辅助系统，服务于中文电子病历分析。'},{title:'语言模型的公平性与偏见消减',desc:'系统性评估并缓解大型语言模型中存在的社会偏见，推动 AI 公平研究。'}],
+  publications:[{year:'2024',title:'Probing Syntactic and Semantic Knowledge in Multilingual Language Models: A Cross-lingual Perspective',authors:'张明远, 李晓燕, James Henderson, 王涛',venue:'Proceedings of ACL 2024',url:'#',tags:['Best Paper Nominee','Multilingual NLP','Probing']},{year:'2024',title:'Zero-Shot Cross-Lingual Transfer for Low-Resource Languages via Pivot Languages',authors:'陈思雨, 张明远, Graham Neubig',venue:'Findings of EMNLP 2024',url:'#',tags:['Zero-Shot Transfer','Low-Resource']},{year:'2023',title:'Towards Debiasing Chinese Clinical NLP: A Dataset and Benchmark',authors:'张明远, 赵雨晴, 刘洋, Bing Liu',venue:'NeurIPS 2023 Datasets and Benchmarks Track',url:'#',tags:['Clinical NLP','Dataset','Fairness']}],
+  teachingIntro:'每学年开设研究生与本科生课程，致力于将前沿研究融入课程教学，培养学生解决真实世界 NLP 问题的能力。',
+  teaching:[{code:'CS 6831 · 2024 秋',title:'自然语言处理前沿',meta:'研究生课程 · 每周三 13:30–16:00'},{code:'CS 4201 · 2024 春',title:'深度学习与文本分析',meta:'本科生课程 · 每周二四 09:00–10:30'}],
+  contactHead:'欢迎<em>交流</em><br>与合作', contactSub:'诚挚欢迎对自然语言处理研究感兴趣的学生与同行与我联系。',
+  contact:[{label:'Email',text:'mingyuan.zhang@tsinghua.edu.cn',url:'mailto:mingyuan.zhang@tsinghua.edu.cn'},{label:'Google Scholar',text:'学术主页',url:'#'},{label:'GitHub',text:'@mingyuan-zhang',url:'#'}]
+};
+function loadData(){ try{return JSON.parse(localStorage.getItem('academicSiteData')) || DEFAULT_SITE_DATA;}catch(e){return DEFAULT_SITE_DATA;} }
+function html(el, content){ document.querySelectorAll(`[data-field="${el}"]`).forEach(node=>node.innerHTML=content||''); }
+function render(){ const d=loadData(); ['brand','heroRole','name','title','affiliation','heroDesc','about','photoCaption','researchIntro','teachingIntro','contactHead','contactSub'].forEach(k=>html(k,d[k])); document.title=(d.brand||'Academic Portfolio').replace(/<[^>]*>/g,''); document.getElementById('heroPhoto').src=d.photo||'';
+  document.getElementById('interestChips').innerHTML=(d.interests||[]).map(x=>`<span class="interest-chip">${x}</span>`).join('');
+  document.getElementById('heroLinks').innerHTML=(d.links||[]).map(l=>`<a class="btn ${l.primary?'btn-primary':'btn-outline'}" href="${l.url||'#'}">${l.label}</a>`).join('');
+  document.getElementById('stats').innerHTML=(d.stats||[]).map(s=>`<div class="stat-cell"><span class="stat-num">${s.num}</span><span class="stat-label">${s.label}</span></div>`).join('');
+  document.getElementById('researchGrid').innerHTML=(d.research||[]).map((r,i)=>`<div class="research-card"><span class="research-card-num">${String(i+1).padStart(2,'0')}</span><h3>${r.title}</h3><p>${r.desc}</p></div>`).join('');
+  renderPubs(d.publications||[]);
+  document.getElementById('teachingGrid').innerHTML=(d.teaching||[]).map(c=>`<div class="course-item"><div class="course-code">${c.code}</div><div class="course-title">${c.title}</div><div class="course-meta">${c.meta}</div></div>`).join('');
+  document.getElementById('contactLinks').innerHTML=(d.contact||[]).map(c=>`<li><a href="${c.url||'#'}"><span><span class="link-label">${c.label}</span>${c.text}</span><span class="arrow">↗</span></a></li>`).join(''); }
+function renderPubs(pubs){ const grouped={}; pubs.sort((a,b)=>(b.year||'').localeCompare(a.year||'')).forEach(p=>{(grouped[p.year||'Unlisted'] ||= []).push(p)}); document.getElementById('publicationList').innerHTML=Object.entries(grouped).map(([year,items])=>`<div class="pub-year-group"><div class="pub-year">${year}</div>${items.map(p=>`<div class="pub-item"><div class="pub-title"><a href="${p.url||'#'}">${p.title||''}</a></div><div class="pub-authors">${highlightName(p.authors||'')}</div><div class="pub-venue">${p.venue||''}</div><div class="pub-tags">${(p.tags||[]).map((t,i)=>`<span class="tag ${i===0&&/best|award|nominee/i.test(t)?'tag-highlight':''}">${t}</span>`).join('')}</div></div>`).join('')}</div>`).join(''); }
+function highlightName(authors){ const d=loadData(); const raw=(d.brand||'').split('/')[0].trim(); return authors.replaceAll(raw,`<strong>${raw}</strong>`).replaceAll('张明远','<strong>张明远</strong>'); }
+const hp=document.getElementById('heroPhoto'); if(hp){hp.onerror=function(){this.style.display='none';}; hp.onload=function(){this.style.display='block';};}
+render();
+</script>
+</body>
+</html>
